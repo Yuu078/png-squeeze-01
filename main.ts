@@ -513,7 +513,7 @@ function findMatches(data, maxChain) {
         if (bl >= maxLen && nl >= maxLen) break;
         // Work budget per position (counted in compared bytes, never time):
         // past it, further candidates almost never change the parse.
-        if (work > 768) break;
+        if (work > 704) break;
       }
       cand = prev[cand];
       tried++;
@@ -767,7 +767,7 @@ function writeBlock(w, tokens, litLen, distLen, dynamic, final) {
  */
 function squeezeDeflate(data) {
   const n = data.length;
-  const maxChain = n <= 1200000 ? 640 : n <= 2500000 ? 256 : 160;
+  const maxChain = n <= 1200000 ? 512 : n <= 2500000 ? 224 : 128;
   const { bestLen, bestDist, nearLen, nearDist } = findMatches(data, maxChain);
   const BLOCK = 786432;
   const w = new BitWriter();
